@@ -1,0 +1,78 @@
+
+    (function() {
+      var preconnectOrigins = ["https://cdn.shopify.com","https://extensions.shopifycdn.com"];
+      var scripts = ["/cdn/shopifycloud/checkout-web/assets/c1/polyfills.DsjDEvpF.js","/cdn/shopifycloud/checkout-web/assets/c1/app.DvebNZUS.js","/cdn/shopifycloud/checkout-web/assets/c1/2c1ab0fe.Bn2XBZD_.js","/cdn/shopifycloud/checkout-web/assets/c1/6a2fc6d6.B3Or15Cg.js","/cdn/shopifycloud/checkout-web/assets/c1/4b4bc88f.xFeORAnM.js","/cdn/shopifycloud/checkout-web/assets/c1/2495faa4.CDCruv3K.js","/cdn/shopifycloud/checkout-web/assets/c1/cf29e63b.BoX1An_4.js","/cdn/shopifycloud/checkout-web/assets/c1/9dba8418.DoyQj_XX.js","/cdn/shopifycloud/checkout-web/assets/c1/cb38e5c2.C0fCfmHx.js","/cdn/shopifycloud/checkout-web/assets/c1/2255f8fa.-u4XU6ye.js","/cdn/shopifycloud/checkout-web/assets/c1/d25d1b95.CjtmH3XH.js","/cdn/shopifycloud/checkout-web/assets/c1/f67abd2c.CWnzIcYE.js","/cdn/shopifycloud/checkout-web/assets/c1/b8733b27.DUXk-_91.js","/cdn/shopifycloud/checkout-web/assets/c1/e39bc11c.XtswV7aF.js","/cdn/shopifycloud/checkout-web/assets/c1/08a3b809.CtDR94Sf.js","/cdn/shopifycloud/checkout-web/assets/c1/164ad2e3.BVv2APid.js","/cdn/shopifycloud/checkout-web/assets/c1/69fae6d4.BnPRa7Y2.js","/cdn/shopifycloud/checkout-web/assets/c1/e12db40c.BdycI1kX.js","/cdn/shopifycloud/checkout-web/assets/c1/60a453ce.CP978BaO.js","/cdn/shopifycloud/checkout-web/assets/c1/c639b2b4.ByEQunzi.js","/cdn/shopifycloud/checkout-web/assets/c1/f8706cb6.Cr01JUEX.js","/cdn/shopifycloud/checkout-web/assets/c1/dffdfb34.DYkVJAGs.js","/cdn/shopifycloud/checkout-web/assets/c1/3ca8ef7e.BRyq1gpL.js","/cdn/shopifycloud/checkout-web/assets/c1/1f5e7811.g0NWtnt4.js","/cdn/shopifycloud/checkout-web/assets/c1/1d34c07e.h4dJAaCz.js","/cdn/shopifycloud/checkout-web/assets/c1/2fdb3dd3.D-nO7o9P.js","/cdn/shopifycloud/checkout-web/assets/c1/22345fd4.1wX-o1AR.js","/cdn/shopifycloud/checkout-web/assets/c1/0e67bd3b.jO6Rt1DS.js","/cdn/shopifycloud/checkout-web/assets/c1/74835653.DnzKNB6Y.js","/cdn/shopifycloud/checkout-web/assets/c1/a9fa9fda.BAeZjzDC.js","/cdn/shopifycloud/checkout-web/assets/c1/ca3e798e.CzzLpqae.js","/cdn/shopifycloud/checkout-web/assets/c1/47b970b2.2UVOQoR_.js","/cdn/shopifycloud/checkout-web/assets/c1/064f6ac1.DW1tjG40.js","/cdn/shopifycloud/checkout-web/assets/c1/efa0389a.YXx0uq_V.js","/cdn/shopifycloud/checkout-web/assets/c1/4b1c22b7.BjF0AS4R.js","/cdn/shopifycloud/checkout-web/assets/c1/17425706.BRwOpTxF.js","/cdn/shopifycloud/checkout-web/assets/c1/cb5cf153.CUaRvVUf.js","/cdn/shopifycloud/checkout-web/assets/c1/e3e348f2.AJxL5r1k.js","/cdn/shopifycloud/checkout-web/assets/c1/71ae3d5c.BtTy-RNc.js","/cdn/shopifycloud/checkout-web/assets/c1/78ab3dd0.BH-aWN50.js","/cdn/shopifycloud/checkout-web/assets/c1/89e2d30a.C5b5F0vy.js","/cdn/shopifycloud/checkout-web/assets/c1/ed9f2238.DntZbiJr.js","/cdn/shopifycloud/checkout-web/assets/c1/6fb6f9d8.DQDZysST.js","/cdn/shopifycloud/checkout-web/assets/c1/1444e6bd.J590fSWt.js","/cdn/shopifycloud/checkout-web/assets/c1/0b8657b8.b1_Vm9MW.js","/cdn/shopifycloud/checkout-web/assets/c1/a422df8c.DC49H8DA.js","/cdn/shopifycloud/checkout-web/assets/c1/55098bf1.YprcRZKT.js","/cdn/shopifycloud/checkout-web/assets/c1/f49d4216.CFtMKn_S.js","/cdn/shopifycloud/checkout-web/assets/c1/d22d2b80.Ddql8ZCZ.js","/cdn/shopifycloud/checkout-web/assets/c1/f58f39d8.CgXUh05e.js","/cdn/shopifycloud/checkout-web/assets/c1/e03065ab.CTdRaWnX.js","/cdn/shopifycloud/checkout-web/assets/c1/79974aab.BgwIKdvK.js","/cdn/shopifycloud/checkout-web/assets/c1/7b0c98ea.BgeratRS.js","/cdn/shopifycloud/checkout-web/assets/c1/0e9ee714.DiHW2YFO.js","/cdn/shopifycloud/checkout-web/assets/c1/39921a74.DrgWGa-n.js","/cdn/shopifycloud/checkout-web/assets/c1/7a8217fd.DNXkECZz.js","/cdn/shopifycloud/checkout-web/assets/c1/8599b02a.DGVedcdI.js","/cdn/shopifycloud/checkout-web/assets/c1/ccdf3592.CoFDC5SS.js","/cdn/shopifycloud/checkout-web/assets/c1/71b60e0a.DfPLdYsH.js","/cdn/shopifycloud/checkout-web/assets/c1/24773686.ZbU_bKS1.js","/cdn/shopifycloud/checkout-web/assets/c1/ec391382.eramAUj3.js","/cdn/shopifycloud/checkout-web/assets/c1/6bfea526.CIVR0ifo.js","/cdn/shopifycloud/checkout-web/assets/c1/ac5a19ff.D80mktE3.js","/cdn/shopifycloud/checkout-web/assets/c1/598fef4e.CUL4oBOF.js","/cdn/shopifycloud/checkout-web/assets/c1/e77f7fe0.CMKiVZlj.js","/cdn/shopifycloud/checkout-web/assets/c1/cc6ff67d.boAGeP7h.js","/cdn/shopifycloud/checkout-web/assets/c1/bf513f9c.CI-aBM73.js","/cdn/shopifycloud/checkout-web/assets/c1/dfca5da5.B6WYFuK8.js","/cdn/shopifycloud/checkout-web/assets/c1/dae24aab.Bjd8H2hA.js","/cdn/shopifycloud/checkout-web/assets/c1/a25deb9a.B6XWf2y6.js","/cdn/shopifycloud/checkout-web/assets/c1/01973ac7.pE3qkHKh.js","/cdn/shopifycloud/checkout-web/assets/c1/58314944.BLFwoWyN.js","/cdn/shopifycloud/checkout-web/assets/c1/945a08d6.DI3T_eSW.js","/cdn/shopifycloud/checkout-web/assets/c1/7bc8057b.Dje3Vmww.js","/cdn/shopifycloud/checkout-web/assets/c1/f1968089.BrnZjzNz.js","/cdn/shopifycloud/checkout-web/assets/c1/2b89a178.8790URVz.js","/cdn/shopifycloud/checkout-web/assets/c1/b684bff6.BKguz6RC.js","/cdn/shopifycloud/checkout-web/assets/c1/910cd6e2.C8s0NJwk.js","/cdn/shopifycloud/checkout-web/assets/c1/347b440c.BCI4W4Mq.js","/cdn/shopifycloud/checkout-web/assets/c1/9ce08e25.QjhMHs0Z.js","/cdn/shopifycloud/checkout-web/assets/c1/181d38d3.CRIq7Rw8.js","/cdn/shopifycloud/checkout-web/assets/c1/792bb671.B3OvVnSg.js","/cdn/shopifycloud/checkout-web/assets/c1/9ca7d819.DdCQei8N.js","/cdn/shopifycloud/checkout-web/assets/c1/f51e663e.l_PKpLEH.js","/cdn/shopifycloud/checkout-web/assets/c1/21cc90a2.DHzOO82q.js","/cdn/shopifycloud/checkout-web/assets/c1/64de7b49.B1Cjhvbw.js","/cdn/shopifycloud/checkout-web/assets/c1/8e79be58.CkIPdsHE.js","/cdn/shopifycloud/checkout-web/assets/c1/90e26f5f.Ct143nQG.js","/cdn/shopifycloud/checkout-web/assets/c1/31cc568e.95lmLO5k.js","/cdn/shopifycloud/checkout-web/assets/c1/65f3d4da.Bb3QiqCm.js","/cdn/shopifycloud/checkout-web/assets/c1/ca5e9c49.C3t2BZNP.js","/cdn/shopifycloud/checkout-web/assets/c1/f3e117aa.DcRz-A-H.js","/cdn/shopifycloud/checkout-web/assets/c1/7aefefff.CEsB0ngb.js","/cdn/shopifycloud/checkout-web/assets/c1/b3389d5c.ChyU8eM0.js","/cdn/shopifycloud/checkout-web/assets/c1/73a9b0a0.pFeKZVey.js","/cdn/shopifycloud/checkout-web/assets/c1/25604ae0.56pfEpxV.js","/cdn/shopifycloud/checkout-web/assets/c1/dada7e07.BDOQpVkJ.js","/cdn/shopifycloud/checkout-web/assets/c1/81e109b1.DOkM2TK2.js","/cdn/shopifycloud/checkout-web/assets/c1/86720dbb.DPBBHNna.js","/cdn/shopifycloud/checkout-web/assets/c1/f692f62f.3EfggsCB.js","/cdn/shopifycloud/checkout-web/assets/c1/9babe369.VqWZm-jr.js","/cdn/shopifycloud/checkout-web/assets/c1/434e3b0a.oup8Ur0H.js","/cdn/shopifycloud/checkout-web/assets/c1/e0989459.CDwVvDXi.js","/cdn/shopifycloud/checkout-web/assets/c1/cdfd59e6.ChHWCT1Z.js","/cdn/shopifycloud/checkout-web/assets/c1/fc21c11a.B3Dq6pEx.js","/cdn/shopifycloud/checkout-web/assets/c1/e129c76e.CSXGaESr.js","/cdn/shopifycloud/checkout-web/assets/c1/d4ea2faa.DbQd7li-.js","/cdn/shopifycloud/checkout-web/assets/c1/fe885b80.8rG3C6XN.js","/cdn/shopifycloud/checkout-web/assets/c1/f78726c8.CTEjjlsu.js","/cdn/shopifycloud/checkout-web/assets/c1/e477f96c.CEyIi4pG.js","/cdn/shopifycloud/checkout-web/assets/c1/1ed8f5e3.zSlAOOl_.js","/cdn/shopifycloud/checkout-web/assets/c1/7ee73f43.BhfPZYnP.js","/cdn/shopifycloud/checkout-web/assets/c1/0c0ad074.BaHmCzAr.js","/cdn/shopifycloud/checkout-web/assets/c1/87bfafec.CxwEzGHg.js","/cdn/shopifycloud/checkout-web/assets/c1/051149c8.lHD9iIAq.js","/cdn/shopifycloud/checkout-web/assets/c1/d2e6a587.CAZneIbj.js","/cdn/shopifycloud/checkout-web/assets/c1/c10167e6.DMzHJAfh.js","/cdn/shopifycloud/checkout-web/assets/c1/b9c0319a.DM0_FhDt.js","/cdn/shopifycloud/checkout-web/assets/c1/17e57de1.AqQHEhs_.js","/cdn/shopifycloud/checkout-web/assets/c1/4b77f49a.eGvAD4dJ.js","/cdn/shopifycloud/checkout-web/assets/c1/66338e00.DLEX537_.js","/cdn/shopifycloud/checkout-web/assets/c1/e77d135d.Dz0RetrO.js","/cdn/shopifycloud/checkout-web/assets/c1/24fcbaf6.DTzCudaA.js","/cdn/shopifycloud/checkout-web/assets/c1/b13c0af6.68gFPoo3.js","/cdn/shopifycloud/checkout-web/assets/c1/49758c58.B1YZFkom.js","/cdn/shopifycloud/checkout-web/assets/c1/28ac86c0.2URTjjJ3.js","/cdn/shopifycloud/checkout-web/assets/c1/3e6029dd.-RwESjy_.js","/cdn/shopifycloud/checkout-web/assets/c1/30074413.DjkDar0N.js","/cdn/shopifycloud/checkout-web/assets/c1/9f57d2aa.CbP_f5EA.js","/cdn/shopifycloud/checkout-web/assets/c1/8574876b.CnKHkXnC.js","/cdn/shopifycloud/checkout-web/assets/c1/33d2e4fc.DIllMgrw.js","/cdn/shopifycloud/checkout-web/assets/c1/27f09e31.By6X8LAS.js","/cdn/shopifycloud/checkout-web/assets/c1/137622f3.B6JtP_Tx.js","/cdn/shopifycloud/checkout-web/assets/c1/54bf0ebb.Dja4WF5H.js","/cdn/shopifycloud/checkout-web/assets/c1/29034f35.BjEseYHy.js","/cdn/shopifycloud/checkout-web/assets/c1/c610ba76.CcRdP948.js","/cdn/shopifycloud/checkout-web/assets/c1/2210eadb.DF0gIp_2.js","/cdn/shopifycloud/checkout-web/assets/c1/33682ee7.BHJWlEmw.js","/cdn/shopifycloud/checkout-web/assets/c1/sandbox.DPR1-ja_.worker.js","/cdn/shopifycloud/checkout-web/assets/c1/sandbox-2025-07.Y8PbZN5J.worker.js","https://extensions.shopifycdn.com/shopifycloud/checkout-web/assets/c1/polyfills-entry-modern.70q66_NX.worker.js"];
+      var styles = ["/cdn/shopifycloud/checkout-web/assets/c1/assets/app.CcGlIMpn.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/wallet-prefilled-guest-return.BJvF0-q4.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/hydrate.Lwx3mCeL.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/OnePage.C_uC3EPz.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/VatNumberValidationField.CCUOu22N.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/StickyPayButton.D-gNjNDa.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/Tipping.BcTJoNaV.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/Section.CU18S7Ap.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/PaymentLine.DT05kVlY.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/PaymentIcon.gzvCNwz_.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/useShopPayProgressIntercepts.CIy8uDiZ.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/Choice.CrYuHUmO.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/constants.xO_7ctnq.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/BillingAddressForm.BdwN7V1K.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/ShopPayLogo.87JMHPUK.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/Switch.BS8yVgoP.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/EmptyState.BEvzDDvy.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/PhoneField.uZEuHncj.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/Middot.D7Ujmshx.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/ShippingMethods.DU0m5rdF.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/EstimatedDeliveryContent.B_THySFF.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/ExpressCheckoutButton.BnDF3H7t.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/TransitionHeight.CuRoM9zv.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/BelowTheFoldContent.DF_4CoKM.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/RememberMeSection.JBO5WNhc.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/PayButtonSection.CZuxzxFG.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/MobileOrderSummary.DjDhVpQB.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/hooks.CKE1iCma.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/PaymentOptionSelector.s-Kd_X2E.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/PaymentMethodProgressionHost.C0BOgdmL.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/Popover.Bi1nHaU-.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/floating-layer.DfWUBaTh.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/useShopPayButtonClassName.D-F4uQ9M.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/ShippingMethodSelector.B0hio2RO.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/SubscriptionPriceBreakdown.vTcdVGq4.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/RedirectionNotice.DgiInWJ-.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/RuntimeExtension.DWkDBM73.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/AnnouncementRuntimeExtensions.DbBB6lBJ.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/QRCode.BZ_m5G5a.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/Pressable.D9SfDfsb.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/DateField.CFFsBmUK.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/NumberField.CRpcZnVJ.css","/cdn/shopifycloud/checkout-web/assets/c1/assets/Sheet.CpR5hiDV.css"];
+      var fontPreconnectUrls = [];
+      var fontPrefetchUrls = [];
+      var imgPrefetchUrls = ["https://cdn.shopify.com/s/files/1/0311/9398/9260/files/logo-true_76218d04-c41f-4a18-87bf-2c381dbce46c_x320.png?v=1783445471"];
+
+      function preconnect(url, callback) {
+        var link = document.createElement('link');
+        link.rel = 'dns-prefetch preconnect';
+        link.href = url;
+        link.crossOrigin = '';
+        link.onload = link.onerror = callback;
+        document.head.appendChild(link);
+      }
+
+      function preconnectAssets() {
+        var resources = preconnectOrigins.concat(fontPreconnectUrls);
+        var index = 0;
+        (function next() {
+          var res = resources[index++];
+          if (res) preconnect(res, next);
+        })();
+      }
+
+      function prefetch(url, as, callback) {
+        var link = document.createElement('link');
+        if (link.relList.supports('prefetch')) {
+          link.rel = 'prefetch';
+          link.fetchPriority = 'low';
+          link.as = as;
+          if (as === 'font') link.type = 'font/woff2';
+          link.href = url;
+          link.crossOrigin = '';
+          link.onload = link.onerror = callback;
+          document.head.appendChild(link);
+        } else {
+          var xhr = new XMLHttpRequest();
+          xhr.open('GET', url, true);
+          xhr.onloadend = callback;
+          xhr.send();
+        }
+      }
+
+      function prefetchAssets() {
+        var resources = [].concat(
+          scripts.map(function(url) { return [url, 'script']; }),
+          styles.map(function(url) { return [url, 'style']; }),
+          fontPrefetchUrls.map(function(url) { return [url, 'font']; }),
+          imgPrefetchUrls.map(function(url) { return [url, 'image']; })
+        );
+        var index = 0;
+        function run() {
+          var res = resources[index++];
+          if (res) prefetch(res[0], res[1], next);
+        }
+        var next = (self.requestIdleCallback || setTimeout).bind(self, run);
+        next();
+      }
+
+      function onLoaded() {
+        try {
+          if (parseFloat(navigator.connection.effectiveType) > 2 && !navigator.connection.saveData) {
+            preconnectAssets();
+            prefetchAssets();
+          }
+        } catch (e) {}
+      }
+
+      if (document.readyState === 'complete') {
+        onLoaded();
+      } else {
+        addEventListener('load', onLoaded);
+      }
+    })();
+  

@@ -1,34 +1,52 @@
 /* Responsive logic */
 
+/* Desktop: 400px panel + room for its box-shadow (12px top, 17px sides, 20px bottom) */
 @media screen and (min-width: 451px) {
   .WizybotShopifyWidget__iframe__outter__open__right {
-    right: 15px;
-    bottom: 15px;
-    width: min(100vw, 387.6px);
-    height: min(590px, 100vh - 40px);
+    right: 0px;
+    bottom: 0px;
+    width: 434px;
+    height: min(682px, 100vh - 8px);
   }
 
   .WizybotShopifyWidget__iframe__outter__open__left {
-    right: calc(100% - min(100vw, 402.3px));
-    bottom: 15px;
-    width: min(100vw, 387.6px);
-    height: min(590px, 100vh - 40px);
+    right: calc(100% - 434px);
+    bottom: 0px;
+    width: 434px;
+    height: min(682px, 100vh - 8px);
   }
 }
 
+/* Expanded: 490px panel + the same shadow room. Only when the page has room
+   (524 + 36px slack); narrower pages keep the 434px iframe even if expanded */
+@media screen and (min-width: 560px) {
+  .WizybotShopifyWidget__iframe__outter__open__right.WizybotShopifyWidget__iframe__outter--wide {
+    width: 524px;
+  }
+
+  .WizybotShopifyWidget__iframe__outter__open__left.WizybotShopifyWidget__iframe__outter--wide {
+    right: calc(100% - 524px);
+    width: 524px;
+  }
+}
+
+/* Mobile: the open panel takes the whole screen. 100dvh follows the browser
+   bar so the composer never hides behind it; 100vh is the fallback */
 @media screen and (max-width: 450.999px) {
   .WizybotShopifyWidget__iframe__outter__open__right {
     right: 0px;
     bottom: 0px;
     width: 100vw;
-    height: calc(100vh - 100px);
+    height: 100vh;
+    height: 100dvh;
   }
 
   .WizybotShopifyWidget__iframe__outter__open__left {
     right: 0%;
     bottom: 0;
     width: 100vw;
-    height: calc(100vh - 100px);
+    height: 100vh;
+    height: 100dvh;
   }
 }
 
@@ -76,6 +94,6 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  height: 590px;
-  width: 387.6px;
+  height: 682px;
+  width: 434px;
 }

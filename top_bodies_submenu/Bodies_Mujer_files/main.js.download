@@ -1,0 +1,432 @@
+(async () => {
+  const sacSection = document.querySelector(".sac-section");
+  const HOST = sacSection?.dataset.host || "https://sac-shopify-app.onrender.com";
+  const qs = (selector) => document.querySelector(selector);
+  const show = (element) => {
+    if (element) element.style.display = "block";
+  };
+  const hide = (element) => {
+    if (element) element.style.display = "none";
+  };
+  const CART_ENDPOINT_REGEX = /\/cart\/(add|update|change|clear)/i;
+  const shareACartBtn = qs("#sac-share-a-cart-btn");
+  const errorModal = qs("#sac-share-a-cart-error-modal");
+  const errorTitle = qs("#sac-error-title");
+  const errorDescription = qs("#sac-error-description");
+  const errorDismissButton = qs("#sac-error-dismiss");
+
+  const copyToClipboard = (str) => {
+    const el = document.createElement("textarea");
+    el.value = str;
+    el.setAttribute("readonly", "");
+    el.style.position = "absolute";
+    el.style.left = "-9999px";
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand("copy");
+    document.body.removeChild(el);
+  };
+
+  const Shopify = {
+    getCart() {
+      return new Promise((resolve, reject) => {
+        fetch("/cart.json")
+          .then((res) => res.json())
+          .then((data) => resolve(data))
+          .catch((err) => reject(err));
+      });
+    },
+    generatePayloadFromSACCart(sacCart) {
+      const payload = {};
+      payload.items = (sacCart?.items || []).map((item) => {
+        const url = new URL(item.productId, window.location.origin);
+        const propParam = url.searchParams.get('prop');
+
+        let properties = {};
+        if (propParam) {
+          try {
+            const decoded = decodeURIComponent(propParam);
+            properties = JSON.parse(decoded);
+          } catch (e) {
+            // Silent fail on parse error
+          }
+        }
+
+        return {
+          id: +item.asin,
+          quantity: +item.quantity,
+          properties: properties,
+        };
+      });
+
+      return payload;
+    },
+    appendItemsToCart(payload) {
+      return new Promise((resolve, reject) => {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          body: JSON.stringify(payload),
+          redirect: "follow",
+        };
+
+        fetch("/cart/add.json", requestOptions)
+          .then((res) => res.json())
+          .then((data) => resolve(data))
+          .catch((err) => reject(err));
+      });
+    },
+  };
+
+  const SAC = {
+    createCart(cart) {
+      return new Promise((resolve, reject) => {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        var requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          body: JSON.stringify({ cart }),
+          redirect: "follow",
+        };
+
+        fetch(`${HOST}/api/cart`, requestOptions)
+          .then((response) => response.json())
+          .then((result) => resolve(result))
+          .catch((error) => reject(error));
+      });
+    },
+    getCart(cartId) {
+      return new Promise((resolve, reject) => {
+        const url = `${HOST}/api/cart?cartId=${cartId}`;
+
+        fetch(url)
+          .then((response) => {
+            if (!response.ok) {
+              const error = new Error(`HTTP ${response.status}`);
+              error.status = response.status;
+              throw error;
+            }
+            return response.json();
+          })
+          .then((result) => resolve(result.data))
+          .catch((error) => reject(error));
+      });
+    },
+    generateCartFromShopifyCart(shopifyCart, { shop } = {}) {
+      const sacCart = {};
+
+      sacCart.vendor = "shopify";
+      sacCart.ap = "https://" + (shop || window.location.hostname);
+      sacCart.ccy = shopifyCart.currency;
+
+      sacCart.cart = shopifyCart.items.map((item) => {
+        const propertiesEncoded = item.properties ? encodeURIComponent(JSON.stringify(item.properties)) : '';
+        const url = new URL(item.url, window.location.origin);
+        if (propertiesEncoded) {
+          url.searchParams.set('prop', propertiesEncoded);
+        }
+        return {
+          asin: item.variant_id,
+          name: item.title,
+          img: item.image,
+          quantity: item.quantity,
+          price: item.price / 100,
+          productId: url.toString().replace(window.location.origin, ''),  // Убираем current site base
+          sku: item.sku,
+        };
+      });
+
+      return sacCart;
+    },
+  };
+
+  const handleShareACart = async (evant, shareACartBtn) => {
+    if (shareACartBtn) shareACartBtn.textContent = window.sacTranslations.creating;
+    try {
+      const cart = await Shopify.getCart();
+      const cartResponse = await SAC.createCart(
+        SAC.generateCartFromShopifyCart(cart)
+      );
+
+      const cartId = cartResponse.data.cartid;
+
+      if (!cartId) {
+        return;
+      }
+
+      const shareACartModal = qs("#sac-share-a-cart-modal");
+      if (!shareACartModal) {
+        return;
+      }
+
+      // show the modal
+      shareACartModal.classList.add("sac-modal-show");
+
+      // Check if direct sharing is enabled from theme settings
+      let cartLink = `https://share-a-cart.com/get/${cartId}`;
+      let cartShareLink = `https://share-a-cart.com/share/${cartId}`;
+
+      if (window.sacDirectSharingEnabled) {
+        // Use direct links to the store instead of share-a-cart.com
+        const shop = window.location.hostname;
+        const storeUrl = `https://${shop}`;
+        cartLink = `${storeUrl}?sacId=${cartId}`;
+        cartShareLink = `${storeUrl}?sacId=${cartId}`;
+      }
+
+      const modalCartLink = qs("#sac-cart-link");
+      const shareLinkBtn = qs("#sac-share-link-btn");
+      const emailLinkBtn = qs("#sac-email-link-btn");
+      const copyLinkBtn = qs("#sac-copy-link-btn");
+      const closeModalBtn = qs("#sac-modal-close-btn");
+
+      if (closeModalBtn) {
+        closeModalBtn.addEventListener("click", () => {
+          shareACartModal.classList.remove("sac-modal-show");
+        });
+      }
+
+      if (modalCartLink) {
+        modalCartLink.textContent = cartLink;
+      }
+
+      if (copyLinkBtn) {
+        copyLinkBtn.addEventListener("click", () => {
+          copyToClipboard(cartLink);
+          const defaultValue = copyLinkBtn.textContent;
+          copyLinkBtn.textContent = window.sacTranslations.link_copied;
+
+          setTimeout(() => {
+            if (copyLinkBtn) copyLinkBtn.textContent = defaultValue;
+          }, 2000);
+        });
+      }
+
+      if (shareLinkBtn) {
+        shareLinkBtn.addEventListener("click", () => {
+          window.open(cartShareLink, "_blank").focus();
+        });
+      }
+
+      if (emailLinkBtn) {
+        emailLinkBtn.addEventListener("click", () => {
+          window.open(
+            `mailto:mail@example.com?subject=${window.sacTranslations.cart_for}${Shopify.shop}&body=${cartLink}`
+          );
+        });
+      }
+    } catch (error) {
+      console.error("Error in handleShareACart:", error);
+    } finally {
+      if (shareACartBtn) shareACartBtn.textContent = window.sacTranslations.share_cart;
+    }
+  };
+
+  let refreshTimeout;
+  const scheduleCartRefresh = () => {
+    if (refreshTimeout) {
+      clearTimeout(refreshTimeout);
+    }
+    refreshTimeout = setTimeout(() => {
+      refreshShareACartBtn();
+    }, 400);
+  };
+
+  const refreshShareACartBtn = async () => {
+    if (!shareACartBtn) return;
+    try {
+      const shopifyCart = await Shopify.getCart();
+      const hasItems = Boolean(shopifyCart?.items?.length);
+
+      if (hasItems) {
+        show(shareACartBtn);
+        shareACartBtn.onclick = (event) => handleShareACart(event, shareACartBtn);
+      } else {
+        hide(shareACartBtn);
+        shareACartBtn.onclick = null;
+      }
+    } catch (error) {
+      console.error("Error refreshing Share a Cart button:", error);
+    }
+  };
+
+  const shouldTrackCartRequest = (input) => {
+    if (!input) return false;
+    if (typeof input === "string") {
+      return CART_ENDPOINT_REGEX.test(input);
+    }
+    if (input instanceof Request) {
+      return CART_ENDPOINT_REGEX.test(input.url);
+    }
+    return false;
+  };
+
+  const patchFetchForCartUpdates = () => {
+    if (!window.fetch || window.__sacFetchPatched) return;
+    window.__sacFetchPatched = true;
+
+    const originalFetch = window.fetch.bind(window);
+    window.fetch = (...args) => {
+      const shouldTrack = shouldTrackCartRequest(args[0]);
+      return originalFetch(...args)
+        .then((response) => {
+          if (shouldTrack) {
+            scheduleCartRefresh();
+          }
+          return response;
+        })
+        .catch((error) => {
+          if (shouldTrack) {
+            scheduleCartRefresh();
+          }
+          throw error;
+        });
+    };
+  };
+
+  const patchXHRForCartUpdates = () => {
+    if (!window.XMLHttpRequest || window.__sacXHRPatched) return;
+    window.__sacXHRPatched = true;
+
+    const originalOpen = XMLHttpRequest.prototype.open;
+    const originalSend = XMLHttpRequest.prototype.send;
+
+    XMLHttpRequest.prototype.open = function (...args) {
+      const [, url] = args;
+      this.__sacTrackCart = typeof url === "string" && CART_ENDPOINT_REGEX.test(url);
+      return originalOpen.apply(this, args);
+    };
+
+    XMLHttpRequest.prototype.send = function (...args) {
+      if (this.__sacTrackCart) {
+        this.addEventListener("loadend", scheduleCartRefresh);
+      }
+      return originalSend.apply(this, args);
+    };
+  };
+
+  const listenForCartUpdates = () => {
+    if (!shareACartBtn) return;
+
+    const fallbackInterval = setInterval(refreshShareACartBtn, 5000);
+
+    document.addEventListener(
+      "submit",
+      (event) => {
+        const form = event.target;
+        if (
+          form &&
+          typeof form.matches === "function" &&
+          form.matches('form[action*="/cart/add"]')
+        ) {
+          scheduleCartRefresh();
+        }
+      },
+      true
+    );
+
+    ["cart:refresh", "cart:updated", "ajaxCart:updated"].forEach((eventName) => {
+      document.addEventListener(eventName, scheduleCartRefresh);
+    });
+
+    if (window.ShopifyAnalytics?.subscribe) {
+      try {
+        window.ShopifyAnalytics.subscribe("cart_updated", scheduleCartRefresh);
+      } catch (error) {
+        console.warn("Failed to subscribe to ShopifyAnalytics cart events", error);
+      }
+    }
+
+    patchFetchForCartUpdates();
+    patchXHRForCartUpdates();
+
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) {
+        refreshShareACartBtn();
+      }
+    });
+
+    window.addEventListener("pageshow", refreshShareACartBtn);
+
+    window.addEventListener("beforeunload", () => {
+      clearInterval(fallbackInterval);
+    });
+  };
+
+  const closeErrorModal = () => {
+    if (errorModal) {
+      errorModal.classList.remove("sac-modal-show");
+    }
+  };
+
+  const openErrorModal = (type) => {
+    if (!errorModal) return;
+    const translations = window.sacTranslations || {};
+    const isDirectError = type === "direct";
+
+    const title = isDirectError
+      ? translations.direct_sharing_error_title || translations.generic_error_title
+      : translations.generic_error_title;
+    const description = isDirectError
+      ? translations.direct_sharing_error_description || translations.generic_error_description
+      : translations.generic_error_description;
+    const dismiss = isDirectError
+      ? translations.direct_sharing_error_dismiss || "Close"
+      : translations.direct_sharing_error_dismiss || "Close";
+
+    if (errorTitle) errorTitle.textContent = title || "";
+    if (errorDescription) errorDescription.textContent = description || "";
+    if (errorDismissButton) {
+      errorDismissButton.textContent = dismiss || "Close";
+      errorDismissButton.onclick = closeErrorModal;
+    }
+
+    errorModal.classList.add("sac-modal-show");
+  };
+
+  const handleSharedCart = async (cartId) => {
+    try {
+      if (shareACartBtn) shareACartBtn.textContent = window.sacTranslations.loading;
+
+      const sacCart = await SAC.getCart(cartId);
+      const payload = Shopify.generatePayloadFromSACCart(sacCart);
+
+      if (payload.items.length) {
+        if (shareACartBtn) shareACartBtn.textContent = window.sacTranslations.adding_items;
+        await Shopify.appendItemsToCart(payload);
+        window.location.href = "/cart";
+      }
+    } catch (error) {
+      console.error("Error in handleSharedCart:", error);
+
+      if (error?.status === 403) {
+        openErrorModal("direct");
+      } else {
+        openErrorModal("generic");
+      }
+    } finally {
+      if (shareACartBtn) shareACartBtn.textContent = "Share Cart";
+    }
+  };
+
+  // Initialize extension
+  if (errorModal) {
+    errorModal.addEventListener("click", (event) => {
+      if (event.target === errorModal) {
+        closeErrorModal();
+      }
+    });
+  }
+
+  refreshShareACartBtn();
+  listenForCartUpdates();
+
+  const cartId = new URLSearchParams(window.location.search).get("sacId");
+  if (cartId) {
+    handleSharedCart(cartId);
+  }
+})();
