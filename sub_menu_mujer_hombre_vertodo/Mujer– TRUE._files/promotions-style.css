@@ -1,0 +1,261 @@
+
+.bundles-bundler-hop-full-page-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(132, 132, 132, 0.29);
+	cursor: pointer;
+	z-index: 2147483647;
+	pointer-events: all;
+}
+
+.bundles-bundler-hop-content {
+	position: absolute;
+	background-color: #FFFFFF;
+	border-radius: 0.5em;
+	max-width: 1024px;
+	width: auto;
+	min-height: 300px;
+	max-height: calc(100% - 2em);
+	height: auto;
+	overflow: visible;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	cursor: auto;
+	padding: 9px;
+	box-shadow: 1px 1px 3px 1px rgba(128, 128, 128, 0.36);
+	display: flex;
+	flex-direction: column;
+}
+
+.bundles-bundler-hop-bundle-container {
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	flex: 1 1 auto;
+}
+
+.bundles-bundler-hop-x-button {
+	position: absolute;
+	width: 2em;
+	height: 2em;
+	top: -0.75em;
+	right: -0.75em;
+	background: rgb(70, 103, 167);
+	background-color: #1D1D1D;
+	border-radius: 50%;
+	cursor: pointer;
+}
+
+div.bundles-bundler-hop-x-button:empty {
+	display: block;
+}
+
+.bundles-bundler-hop-x-button::before,
+.bundles-bundler-hop-x-button::after {
+	position: absolute;
+	left: calc(1em - 1px);
+	content: "";
+	height: 1em;
+	top: 0.5em;
+	width: 2px;
+	background-color: white;
+	background-color: #FFFFFF;
+}
+
+.bundles-bundler-hop-x-button::before {
+	transform: rotate(45deg);
+}
+
+.bundles-bundler-hop-x-button::after {
+	transform: rotate(-45deg);
+}
+
+@media screen and (max-width: 800px) {
+	.bundles-bundler-hop-content {
+		width: 90%;
+	}
+}
+
+.bundles-bundler-hop-content .bndlr-container {
+	margin-top: 0;
+	padding-top: 0;
+}
+
+.bundles-bundler-hop-content .bndlr-products-container {
+	margin-bottom: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+.bundles-bundler-hop-content .bndlr-container h2.bndlr-bundle-title {
+	padding: 0;
+	max-width: calc(100% - 10px);
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.bundles-bundler-hop-content .bndlr-container .bndlr-bundle-description {
+	padding: 0;
+	max-width: calc(100% - 10px);
+}
+
+.bundles-bundler-hop-buttons-container {
+	display: flex;
+	width: calc(100% - 10px);
+	margin: 5px;
+	padding: 0;
+	flex-direction: row;
+}
+
+.bundles-bundler-hop-button-to-checkout {
+	display: block;
+	width: calc(75% - 5px);
+	margin: 0 0 0 5px;
+	background: rgb(70, 103, 167);
+	background-color: #1D1D1D;
+	padding: 0.6em 0;
+	color: white;
+	color: #FFFFFF;
+	border-radius: 2px;
+	cursor: pointer;
+	max-width: 710px;
+	text-align: center;
+	flex: 1 1 auto;
+	position: relative;
+	transition: opacity 0.25s ease;
+	opacity: 0;
+}
+
+.bundles-bundler-hop-animate .bundles-bundler-hop-button-to-checkout {
+	opacity: 1;
+}
+
+.bundles-bundler-hop-button-to-checkout::after {
+	display: block;
+	content: '';
+	border:2px solid white;
+	border: 2px solid #FFFFFF;
+	border-top-color: transparent;
+	border-left-color: transparent;
+	transform: rotate(-45deg) translateY(-50%);
+	width: 0.75em;
+	height: 0.75em;
+	position: absolute;
+	top: 50%;
+	transform-origin: 50% 0%;
+	transition: right 1s ease, opacity 0.5s ease;
+	right: 95%;
+	opacity: 0;
+}
+
+.bundles-bundler-hop-animate .bundles-bundler-hop-button-to-checkout::after {
+	right: 0.75em;
+	opacity: 1;
+}
+
+.bundles-bundler-hop-close-offer {
+	display: block;
+	width: calc(25% - 5px);
+	margin: 0 5px 0 0;
+	background: white;
+	background-color: #FFFFFF;
+	padding: 0.6em 0;
+	color: rgb(70, 103, 167);
+	color: #1D1D1D;
+	border-radius: 2px;
+	cursor: pointer;
+	max-width: 710px;
+	text-align: center;
+	border: 1px solid rgb(70, 103, 167);
+	border: 1px solid #1D1D1D;
+	flex: 1 1 auto;
+	opacity: 0;
+	transition: opacity 0.25s ease;
+}
+
+.bundles-bundler-hop-animate .bundles-bundler-hop-close-offer {
+	opacity: 1;
+}
+
+.bundles-bundler-hop-checkout-loading {
+	color: rgba(0, 0, 0, 0) !important;
+	position: relative;
+}
+
+.bundles-bundler-hop-checkout-loading::after {
+	display: block;
+	content: "";
+	border: 2px solid white;
+	border: 2px solid #FFFFFF;
+	width: 1em;
+	height: 1em;
+	border-radius: 50%;
+	border-top: 2px solid transparent;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	animation-name: bundles-bundler-hop-spin;
+	animation-duration: 500ms;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	transform-origin: 50% 50%;
+}
+
+@keyframes bundles-bundler-hop-spin {
+	from {
+		transform: translateY(-50%) translateX(-50%) rotate(0deg);
+	}
+	to {
+		transform: translateY(-50%) translateX(-50%) rotate(360deg);
+	}
+}
+
+.bundles-bundler-hop-hide-addtc-button .bndlr-add-to-cart {
+	pointer-events: none;
+	opacity: 0.5;
+}
+
+.bundles-bundler-hop-hidden {
+	display: none;
+}
+
+.bundles-bundler-hop-animate .bundles-bundler-hop-button-to-checkout {
+	animation: bundles-bundler-hop-shake 8s cubic-bezier(.34, .05, .17, .95) infinite 5s both;
+	transform: translate3d(0, 0, 0);
+	backface-visibility: hidden;
+	perspective: 2000px;
+}
+
+.bundles-bundler-hop-animate .bundles-bundler-hop-checkout-loading.bundles-bundler-hop-button-to-checkout {
+	animation: none;
+}
+
+@keyframes bundles-bundler-hop-shake {
+	1%, 9% {
+		transform: translate3d(-1px, 0, 0);
+	}
+	2%, 8% {
+		transform: translate3d(2px, 0, 0);
+	}
+	3%, 5%, 7% {
+		transform: translate3d(-4px, 0, 0);
+	}
+	4%, 6% {
+		transform: translate3d(4px, 0, 0);
+	}
+	10%, 100% {
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+.bundles-bundler-hop-close-offer:focus,
+.bundles-bundler-hop-button-to-checkout:focus,
+.bundles-bundler-hop-x-button:focus {
+	outline: 1px dotted rgb(134, 134, 134);
+	outline-offset: 1px;
+	opacity: 0.9;
+}
